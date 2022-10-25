@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 export default function ProductItem({ product }) {
@@ -5,10 +6,13 @@ export default function ProductItem({ product }) {
     <div className="card">
       <Link href={`/product/${product.slug}`}>
         <a>
-          <img
+          <Image
             src={product.image}
             alt={product.name}
             className="rounded shadow"
+            width={640}
+            height={640}
+            layout="responsive"
           />
         </a>
       </Link>
