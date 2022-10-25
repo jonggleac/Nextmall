@@ -1,11 +1,10 @@
 import { createContext, useReducer } from 'react'
-export const Store = createContext() // 컨텍스트 생성
+
+export const Store = createContext()
 const initialState = {
-  // 초기 상태 지정
   cart: { cartItems: [] },
 }
 function reducer(state, action) {
-  // reducer 함수 생성
   switch (action.type) {
     case 'CART_ADD_ITEM': {
       const newItem = action.payload
