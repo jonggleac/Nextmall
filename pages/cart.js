@@ -5,10 +5,15 @@ import React, { useContext } from 'react'
 import Layout from '../components/Layout'
 import { Store } from '../utils/Store'
 import { XCircleIcon } from '@heroicons/react/outline'
+import dynamic from 'next/dynamic'
 
-export default function CartScreen() {
+function CartScreen() {
   const router = useRouter()
   const { state, dispatch } = useContext(Store)
+  const updateCartHandler = (item, qty) => {
+    const quantity = Number(qty)
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } })
+  }
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item })
   }
@@ -52,12 +57,39 @@ export default function CartScreen() {
                         </a>
                       </Link>
                     </td>
-                    <td className="p-5 text-right">{item.quantity}</td>
+                    <td className="p-5 text-right">
+                      <select
+                        value={item.quantity}
+                        onChange={(e) =>
+                          updateCartHandler(item, e.target.value)
+                        }
+                      >
+                        {[...Array(item.countInStock).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
                     <td className="p-5 text-right">${item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
                         <XCircleIcon className="h-5 w-5"></XCircleIcon>
                       </button>
+                    </td>
+                    <td className="p-5 text-right">
+                      <select
+                        value={item.quantity}
+                        onChange={(e) =>
+                          updateCartHandler(item, e.target.value)
+                        }
+                      >
+                        {[...Array(item.countInStock).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </select>
                     </td>
                   </tr>
                 ))}
@@ -87,3 +119,5 @@ export default function CartScreen() {
     </Layout>
   )
 }
+
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false })
