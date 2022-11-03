@@ -1,4 +1,14 @@
+import bcrypt from 'bcryptjs'
 const data = {
+  users: [
+    {
+      name: 'JongYeop',
+      email: 'jonggleac@gmail.com',
+      password: 'samplepswd',
+      isAdmin: true,
+    },
+  ],
+
   products: [
     {
       name: 'Free Shirt',
@@ -73,6 +83,6 @@ const data = {
       description: 'A popular pants',
     },
   ],
-};
+}
 
-export default data;
+export default data
