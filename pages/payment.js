@@ -13,7 +13,7 @@ export default function PaymentScreen() {
   const { cart } = state
   const { shippingAddress, paymentMethod } = cart
 
-  const router = useRouter
+  const router = useRouter()
 
   const submitHandler = (e) => {
     e.preventDefault()
