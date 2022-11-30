@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
-import data from '../../utils/data'
+// import data from '../../utils/data'
 import React, { useContext } from 'react'
 import { Store } from '../../utils/Store'
 import { toast } from 'react-toastify'
@@ -12,6 +12,7 @@ import Product from '../../models/Product'
 
 export default function ProductScreen({ product }) {
   const { state, dispatch } = useContext(Store)
+  const router = useRouter()
   // const { query } = useRouter()
   // const { slug } = query
   // const product = data.products.find((x) => x.slug === slug)

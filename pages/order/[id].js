@@ -6,6 +6,7 @@ import { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 import Layout from '../../components/Layout'
 import { getError } from '../../utils/error'
+import { PayPalButtons } from 'react-paypal-button-v2'
 
 function reducer(state, action) {
   switch (action.type) {

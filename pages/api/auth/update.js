@@ -1,4 +1,7 @@
 import { getSession } from 'next-auth/react'
+import bcrypts from 'bcryptjs'
+import User from '../../../models/User'
+import db from '../../../utils/db'
 
 async function handler(req, res) {
   if (req.method !== 'PUT') {
@@ -23,11 +26,11 @@ async function handler(req, res) {
     return
   }
   await db.connect()
-  const toUpdateUser = await user.findById(user._id)
+  const toUpdateUser = await User.findById(user._id)
   toUpdateUser.name = name
   toUpdateUser.email = email
   if (password) {
-    toUpdateUser.password = brypts.hashSync(password)
+    toUpdateUser.password = bcrypts.hashSync(password)
   }
   await toUpdateUser.save()
   await db.disconnect()
