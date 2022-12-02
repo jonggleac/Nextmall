@@ -25,7 +25,7 @@ const orderSchema = new mongoose.Schema(
     totalPrice: { type: Number, required: true },
     isPaid: { type: Boolean, required: true, default: false },
     isDelivered: { type: Boolean, required: true, default: false },
-    paidAt: { type: date },
+    paidAt: { type: Date },
     deliveredAt: { type: Date },
   },
   {
@@ -33,5 +33,5 @@ const orderSchema = new mongoose.Schema(
   }
 )
 
-const Order = mongoose.models.Order || moongoose.model('Order', orderSchema)
+const Order = mongoose.models.Order || mongoose.model('Order', orderSchema)
 export default Order

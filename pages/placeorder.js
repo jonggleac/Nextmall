@@ -1,8 +1,8 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CheckoutWizard from '../components/CheckoutWizard'
@@ -15,7 +15,7 @@ export default function PlaceOrderScreen() {
   const { cart } = state
   const { cartItems, shippingAddress, paymentMethod } = cart
 
-  const round2 = (num) => Math.round(num * Number.EPSILON) / 100
+  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100
 
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
@@ -97,8 +97,8 @@ export default function PlaceOrderScreen() {
                 <thead className="border-b">
                   <tr>
                     <th className="px-5 text-left">Item</th>
-                    <th className="    p-5 text-right">Quantity</th>
-                    <th className="  p-5 text-right">Price</th>
+                    <th className="p-5 text-right">Quantity</th>
+                    <th className="p-5 text-right">Price</th>
                     <th className="p-5 text-right">Subtotal</th>
                   </tr>
                 </thead>
@@ -178,3 +178,5 @@ export default function PlaceOrderScreen() {
     </Layout>
   )
 }
+
+PlaceOrderScreen.auth = true

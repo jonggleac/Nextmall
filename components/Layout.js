@@ -1,21 +1,22 @@
+import { signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
+import { Menu } from '@headlessui/react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Store } from '../utils/Store'
-import { signOut, useSession } from 'next-auth/react'
-import { Menu } from '@headlessui/react'
 import DropdownLink from './DropdownLink'
 import Cookies from 'js-cookie'
 
 export default function Layout({ title, children }) {
-  const { state, dispatch } = useContext(Store)
   const { status, data: session } = useSession()
-
+  const { state, dispatch } = useContext(Store)
   const { cart } = state
-
   const [cartItemsCount, setCartItemsCount] = useState(0)
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0))
+  }, [cart.cartItems])
 
   const logoutClickHandler = () => {
     Cookies.remove('cart')
@@ -23,14 +24,10 @@ export default function Layout({ title, children }) {
     signOut({ callbackUrl: '/login' })
   }
 
-  useEffect(() => {
-    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0))
-  }, [cart.cartItems])
-
   return (
     <>
       <Head>
-        <title>{title ? title + ' - MyMall' : 'Mymall'}</title>
+        <title>{title ? title + ' - NextShop' : 'NextShop'}</title>
         <meta name="description" content="Nextjs Ecommerce" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -41,7 +38,7 @@ export default function Layout({ title, children }) {
         <header>
           <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-slate-200">
             <Link href="/">
-              <a className="text-lg font-bold">MyMall</a>
+              <a className="text-lg font-bold">NextShop</a>
             </Link>
             <div>
               <Link href="/cart">
@@ -54,6 +51,7 @@ export default function Layout({ title, children }) {
                   )}
                 </a>
               </Link>
+
               {status === 'loading' ? (
                 'Loading'
               ) : session?.user ? (
@@ -61,7 +59,7 @@ export default function Layout({ title, children }) {
                   <Menu.Button className="text-blue-600">
                     {session.user.name}
                   </Menu.Button>
-                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white shadow-lg">
+                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
                     <Menu.Item>
                       <DropdownLink className="dropdown-link" href="/profile">
                         Profile
@@ -72,7 +70,7 @@ export default function Layout({ title, children }) {
                         className="dropdown-link"
                         href="/order-history"
                       >
-                        Order history
+                        Order History
                       </DropdownLink>
                     </Menu.Item>
                     <Menu.Item>
@@ -96,7 +94,7 @@ export default function Layout({ title, children }) {
         </header>
         <main className="container m-auto mt-4 px-4">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner bg-red-100">
-          <p>Copyright &copy; 2022 MyMall</p>
+          <p>Copyright &copy; 2022 NextShop</p>
         </footer>
       </div>
     </>
